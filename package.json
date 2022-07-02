@@ -1,5 +1,5 @@
 {
-  "name": "byteplug-http-api-browser",
+  "name": "byteplug-endpoint-browser",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",

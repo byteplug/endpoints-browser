@@ -6,12 +6,12 @@
   >
     <i-container class="_display:flex">
       <div class="_padding-top:1 _padding-x:1 ">
-        <img src="@/assets/logo.svg" height="80" alt="">
+        <img src="@/assets/logo.svg" height="60" alt="">
       </div>
       <div class="_flex-grow:1">
         <div class="_border-bottom _display:flex _justify-content:space-between _align-items:end">
           <div>
-            <h4>Byteplug HTTP API Browser</h4>
+            <h4>Endpoint Browser</h4>
           </div>
           <div class="_padding-bottom:1">
             <i-input size="sm" placeholder="api.my-company.com/v3">
