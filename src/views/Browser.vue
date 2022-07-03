@@ -1,43 +1,104 @@
 <template>
-  <div
-    class="_height:100% _background:primary _display:flex _flex-direction:column"
+  <i-container
+    fluid
+    class="_height:30% _background:primary"
+    style="min-height: 250px;"
   >
-    <i-nav color="dark" class="_justify-content:end">
-        <i-nav-item to="/standard/1.0/document">Standard Document</i-nav-item>
-        <i-nav-item to="/toolkit">Development Toolkits</i-nav-item>
-    </i-nav>
-
-    <div class="_flex-grow:1 _display:flex _flex-direction:column _justify-content:center _align-items:center">
-      <h1 class="h2 _margin-bottom:4">Byteplug Endpoint Browser</h1>
+    <i-container class="_display:flex">
+      <div class="_padding-top:1 _padding-x:1 ">
+        <img src="@/assets/logo.svg" height="80" alt="">
+      </div>
+      <div class="_flex-grow:1">
+        <div class="_border-bottom _display:flex _justify-content:space-between _align-items:end">
+          <div>
+            <h4>Byteplug Endpoint Browser</h4>
+          </div>
+          <div class="_padding-bottom:1">
+            <i-input size="sm" placeholder="api.my-company.com/v3">
+              <template #append>
+                <i-button color="dark">Browse</i-button>
+              </template>
+            </i-input>
+          </div>
+        </div>
+        <div>
+          <i-nav color="dark" class="_justify-content:end">
+            <i-nav-item to="/standard/1.0/document">Standard Document</i-nav-item>
+            <i-nav-item to="/toolkit">Development Toolkits</i-nav-item>
+          </i-nav>
+        </div>
+      </div>
+    </i-container>
+  </i-container>
+  <i-container>
+    <i-card style="transform: translateY(-50px);">
+      <div class="_display:flex _justify-content:space-between">
+        <i-breadcrumb>
+          <i-breadcrumb-item>Index</i-breadcrumb-item>
+          <i-breadcrumb-item active>Collections</i-breadcrumb-item>
+        </i-breadcrumb>
+        <div class="_display:flex">
+          <div class="_margin-x:1" style="text-align: center;">{{ enums.length }}<br>Enums</div>
+          <div class="_margin-x:1" style="text-align: center;">7<br>Schemas</div>
+          <div class="_margin-x:1" style="text-align: center;">12<br>Collections</div>
+          <div class="_margin-x:1" style="text-align: center;">11<br>Endpoints</div>
+        </div>
+      </div>
       <div>
-        <i-input placeholder="api.my-company.com/v3">
-          <template #append>
-            <i-button color="dark">Browse</i-button>
-          </template>
-        </i-input>
-        <span>Or import from YAML file</span>
+        <router-view></router-view>
       </div>
-    </div>
-    <div class="_display:flex _justify-content:center">
-      <div class="_flex-grow:1">
-        <svg height="60" width="100%">
-          <line x1="6%" y1="48px" x2="94%" y2="48px" style="stroke:rgba(255,255,255,0.5);stroke-width:2" />
-        </svg>
-      </div>
-      <div class="_margin-bottom:2">
-        <img src="@/assets/logo.svg" height="60" alt="">
-      </div>
-      <div class="_flex-grow:1">
-        <svg height="60" width="100%">
-          <line x1="6%" y1="48px" x2="94%" y2="48px" style="stroke:rgba(255,255,255,0.5);stroke-width:2" />
-        </svg>
-      </div>
-    </div>
-  </div>
+    </i-card>
+  </i-container>
 </template>
 
 <script>
 export default {
-  name: 'Browser'
+  name: 'Browser',
+  data() {
+    return {
+      specs: {
+        "enums": {
+          "status": {
+            "values": [
+              "foo",
+              "bar",
+              "quz"
+            ],
+            "default": "foo",
+            "documentation": "This is the doc of the status enumeration."
+          },
+          "validity": {
+            "values": [
+              "valid",
+              "invalid",
+              "unknown"
+            ],
+            "default": "invalid"
+          }
+        }
+      }
+    }
+  },
+  computed: {
+    enums: function() {
+      if ("enums" in this.specs) {
+        return Object.entries(this.specs["enums"]).map(element => {
+          var obj = {
+            'name': element[0],
+            'values': element[1]['values'],
+            'default': element[1]['default'],
+          }
+
+          if ("documentation" in element[1]) {
+            obj['documentation'] = element[1]['documentation']
+          }
+
+          return obj
+        })
+      }
+
+      return []
+    }
+  }
 }
 </script>

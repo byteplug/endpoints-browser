@@ -1,5 +1,6 @@
 <template>
-    <p>Collection</p>
+  <p>Collection</p>
+  <p>Show '{{ $route.params.name }}' collection.</p>
 </template>
 
 <script>
