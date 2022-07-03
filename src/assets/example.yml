@@ -1,0 +1,102 @@
+standard: https://www.byteplug.io/standards/easy-endpoints/1.0
+records:
+  datetime:
+    type: string
+  category:
+    type: map
+    fields:
+      document-id:
+        type: string
+      slug:
+        type: string
+        pattern: ^[a-z]+(-[a-z]+)*$
+      name:
+        type: string
+        length:
+          minimum: 2
+          maximum: 40
+      description:
+        type: string
+        length:
+          minimum: 0
+          maximum: 120
+  question:
+    type: map
+    fields:
+      document-id:
+        type: string
+      question:
+        type: string
+        length:
+          minimum: 0
+          maximum: 512
+      answer:
+        type: string
+        option: true
+      tags:
+        type: list
+        value:
+          type: string
+          pattern: ^[a-z]+(-[a-z]+)*$
+      sources:
+        type: list
+        value:
+          type: string
+      difficulty:
+        type: integer
+        minimum: 1
+        maximum: 10
+      duration:
+        type: integer
+        maximum: 300
+      last-updated: datetime
+    
+collections:
+  category:
+    name: "Category"
+    description: "To be written."
+    endpoints:
+      list:
+        operate: collection
+        response:
+          type: map
+          fields:
+            categories:
+              type: list
+              value: category
+  question:
+    name: "Category"
+    description: "To be written."
+    endpoints:
+      get:
+        operate: collection
+        response:
+          type: map
+          fields:
+            questions:
+              type: list
+              value: question
+
+endpoints:
+  load-index:
+    name: "Load index"
+    description: "To be written."
+    response:
+      type: map
+      fields:
+        sources:
+          type: list
+          value:
+            type: string
+        categories:
+          type: list
+          value:
+            type: string
+        shortcuts:
+          type: list
+          value:
+            type: string
+        settings:
+          type: list
+          value:
+            type: string
