@@ -15,7 +15,12 @@ import "./main.scss"
 
 const app = createApp(App)
 
-app.use(createPinia())
+const pinia = createPinia()
+app.use(pinia)
+
+// Stores must be created after Pinia was registered.
+var specs = specsStore()
+
 app.use(router)
 
 app.use(Inkline, {
@@ -23,6 +28,6 @@ app.use(Inkline, {
 })
 app.use(VueHighlightJS)
 
-app.config.globalProperties.specs = specsStore()
+app.config.globalProperties.specs = specs
 
 app.mount('#app')
