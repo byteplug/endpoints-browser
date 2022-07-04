@@ -21,6 +21,9 @@ app.use(pinia)
 // Stores must be created after Pinia was registered.
 var specs = specsStore()
 
+// Router needs access to the specs store in order to protect some routes when
+// no specs is set.
+router.specs = specs
 app.use(router)
 
 app.use(Inkline, {

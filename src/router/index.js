@@ -54,9 +54,20 @@ const router = createRouter({
           path: 'collections/:name/:path',
           component: EndpointView
         }
-      ],
+      ]
     }
   ]
+})
+
+router.beforeEach((to, from) => {
+  // It's a bit complex, but this will match the routes that needs to be
+  // protected when there is no specs set.
+  if (to.matched[0].name == 'browser') {
+
+    // If there's no specs attached, those routes should never be accessible.
+    return router.specs.value == null ? { name: 'search' } : true
+  }
+  return true
 })
 
 export default router
