@@ -59,10 +59,24 @@
           </div>
         </div>
         <div class="_display:flex">
-          <div class="_margin-x:1" style="text-align: center;">{{ enums.length }}<br>Enums</div>
-          <div class="_margin-x:1" style="text-align: center;">7<br>Schemas</div>
-          <div class="_margin-x:1" style="text-align: center;">12<br>Collections</div>
-          <div class="_margin-x:1" style="text-align: center;">11<br>Endpoints</div>
+          <div class="_margin-x:1 _text-align:center">
+            <router-link to="/records">
+              {{ Object.keys(specs.value.records).length }}
+              <br>Records
+            </router-link>
+          </div>
+          <div class="_margin-x:1 _text-align:center">
+            <router-link to="/collections">
+              {{ Object.keys(specs.value.collections).length }}
+              <br>Collections
+            </router-link>
+          </div>
+          <div class="_margin-x:1 _text-align:center">
+            <router-link to="/endpoints">
+              {{ Object.keys(specs.value.endpoints).length }}
+              <br>Endpoints
+            </router-link>
+          </div>
         </div>
       </div>
       <div>
@@ -74,52 +88,6 @@
 
 <script>
 export default {
-  name: 'Browser',
-  data() {
-    return {
-      specs: {
-        "enums": {
-          "status": {
-            "values": [
-              "foo",
-              "bar",
-              "quz"
-            ],
-            "default": "foo",
-            "documentation": "This is the doc of the status enumeration."
-          },
-          "validity": {
-            "values": [
-              "valid",
-              "invalid",
-              "unknown"
-            ],
-            "default": "invalid"
-          }
-        }
-      }
-    }
-  },
-  computed: {
-    enums: function() {
-      if ("enums" in this.specs) {
-        return Object.entries(this.specs["enums"]).map(element => {
-          var obj = {
-            'name': element[0],
-            'values': element[1]['values'],
-            'default': element[1]['default'],
-          }
-
-          if ("documentation" in element[1]) {
-            obj['documentation'] = element[1]['documentation']
-          }
-
-          return obj
-        })
-      }
-
-      return []
-    }
-  }
+  name: 'Browser'
 }
 </script>
