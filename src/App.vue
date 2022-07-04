@@ -1,9 +1,29 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
+<script>
+import YAML from 'yaml'
+import specsExample from '@/assets/example.yml?raw'
+
+export default {
+  name: 'App',
+  expose: ['loadFromFile', 'loadFromUrl'],
+  methods: {
+    loadFromFile(file) {
+      const reader = new FileReader()
+      reader.onload = e => {
+        this.specs.value = YAML.parse(e.target.result)
+        this.$router.push('/')
+      }
+      reader.readAsText(file)
+    },
+    loadFromUrl(url) {
+      this.specs.value = YAML.parse(specsExample)
+      this.$router.push('/')
+    }
+  }
+}
 </script>
 
 <template>
-  <RouterView />
+  <router-view />
 </template>
 
 <style>
