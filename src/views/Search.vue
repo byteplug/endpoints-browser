@@ -8,15 +8,8 @@
     </i-nav>
 
     <div class="_flex-grow:1 _display:flex _flex-direction:column _justify-content:center _align-items:center">
-      <h1 class="h2 _margin-bottom:4">Byteplug HTTP API browser</h1>
-      <div>
-        <i-input placeholder="api.my-company.com/v3">
-          <template #append>
-            <i-button color="dark">Browse</i-button>
-          </template>
-        </i-input>
-        <span>Or import from YAML file</span>
-      </div>
+      <h1 class="h2 _margin-bottom:4">Byteplug Endpoint Browser</h1>
+      <searchbar size="lg" />
     </div>
     <div class="_display:flex _justify-content:center">
       <div class="_flex-grow:1">
@@ -37,7 +30,12 @@
 </template>
 
 <script>
+import Searchbar from '@/components/Searchbar.vue'
+
 export default {
-  name: 'Search'
+  name: 'Search',
+  components: {
+    Searchbar
+  }
 }
 </script>

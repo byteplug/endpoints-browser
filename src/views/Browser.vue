@@ -14,11 +14,7 @@
             <h4>Byteplug Endpoint Browser</h4>
           </div>
           <div class="_padding-bottom:1">
-            <i-input size="sm" placeholder="api.my-company.com/v3">
-              <template #append>
-                <i-button color="dark">Browse</i-button>
-              </template>
-            </i-input>
+            <searchbar :fromFile="false"/>
           </div>
         </div>
         <div>
@@ -87,7 +83,12 @@
 </template>
 
 <script>
+import Searchbar from '@/components/Searchbar.vue'
+
 export default {
-  name: 'Browser'
+  name: 'Browser',
+  components: {
+    Searchbar
+  }
 }
 </script>
