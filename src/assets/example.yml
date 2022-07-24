@@ -1,102 +1,216 @@
 standard: https://www.byteplug.io/standards/easy-endpoints/1.0
-records:
-  datetime:
-    type: string
-  category:
-    type: map
-    fields:
-      document-id:
-        type: string
-      slug:
-        type: string
-        pattern: ^[a-z]+(-[a-z]+)*$
-      name:
-        type: string
-        length:
-          minimum: 2
-          maximum: 40
-      description:
-        type: string
-        length:
-          minimum: 0
-          maximum: 120
-  question:
-    type: map
-    fields:
-      document-id:
-        type: string
-      question:
-        type: string
-        length:
-          minimum: 0
-          maximum: 512
-      answer:
-        type: string
-        option: true
-      tags:
-        type: list
-        value:
-          type: string
-          pattern: ^[a-z]+(-[a-z]+)*$
-      sources:
-        type: list
-        value:
-          type: string
-      difficulty:
-        type: integer
-        minimum: 1
-        maximum: 10
-      duration:
-        type: integer
-        maximum: 300
-      last-updated: datetime
-    
-collections:
-  category:
-    name: "Category"
-    description: "To be written."
-    endpoints:
-      list:
-        operate: collection
-        response:
-          type: map
-          fields:
-            categories:
-              type: list
-              value: category
-  question:
-    name: "Category"
-    description: "To be written."
-    endpoints:
-      get:
-        operate: collection
-        response:
-          type: map
-          fields:
-            questions:
-              type: list
-              value: question
+title: Task Tracker
+summary: 'Live and working micro-service showcasing the Easy Endpoint standard.Equivalent
+  of the Pet Store from OAS. It aims to be as simple as possible, yetshowing every
+  features of the standard, and an example for other developers.
 
+  '
+contact:
+  name: Byteplug
+  url: https://www.byteplug.io/
+  email: contact@byteplug.io
+license:
+  name: The Open Software License 3.0
+  url: https://opensource.org/licenses/OSL-3.0
+version: 1.0.0
+records: {}
 endpoints:
-  load-index:
-    name: "Load index"
-    description: "To be written."
+  login:
+    name: Authenticate a user and returns a token.
+    description: ' If the user doesn''t exist, the user is created. If the user already
+      exists, the password is checked and it returns ''invalid-password'' error if
+      it doesn''t match. '
+    request:
+      type: map
+      fields:
+        username:
+          type: string
+          length:
+            minimum: 2
+            maximum: 16
+          pattern: ^[a-zA-Z0-9_.-]*$
+        password:
+          type: string
+          length:
+            minimum: 8
+            maximum: 16
+          pattern: ^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$
+    response:
+      type: string
+    errors:
+      invalid-password: {}
+  status:
+    name: Get the service status.
+    description: ' It returns information about the service such as the number of
+      users, tasks, etc. '
     response:
       type: map
       fields:
-        sources:
+        user-count:
+          type: integer
+        task-count:
+          type: integer
+        average-task-per-user:
+          type: string
+        session-duration:
+          type: string
+        max-task-per-user:
+          type: integer
+  simulate-error: {}
+collections:
+  users:
+    name: User
+    description: Represents a user having tasks associated to it.
+    endpoints:
+      get:
+        name: Retrieve the information of a given user.
+        description: ' It returns the username and password of a particular user (you
+          need its ID). Use the list users endpoints in order to retrieve their IDs. '
+        operate: item
+        response:
+          type: map
+          fields:
+            username:
+              type: string
+              length:
+                minimum: 2
+                maximum: 16
+              pattern: ^[a-zA-Z0-9_.-]*$
+            password:
+              type: string
+              length:
+                minimum: 8
+                maximum: 16
+              pattern: ^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$
+            last-updated:
+              type: integer
+        errors:
+          invalid-user-id: {}
+      list:
+        name: List all existing users.
+        description: ' It returns a list of user IDs. Use the get user endpoint in
+          order to retrieve their information. '
+        operate: collection
+        response:
           type: list
           value:
             type: string
-        categories:
+  tasks:
+    name: Task
+    description: Task represents something that you need to do.
+    endpoints:
+      create:
+        name: Create a new task.
+        description: ' The newly created task has status ''not-done'' unless a specific
+          status is specified. It return the task ID. '
+        operate: collection
+        authentication: true
+        request:
+          type: map
+          fields:
+            name:
+              type: string
+              length:
+                minimum: 2
+                maximum: 40
+            description:
+              type: string
+              length:
+                minimum: 0
+                maximum: 120
+              option: true
+            status:
+              type: enum
+              values:
+              - not-done
+              - in-progress
+              - done
+              option: true
+        response:
+          type: string
+      get:
+        name: Retrieve the information of a given task.
+        description: ' It returns the name, description and status of a particular
+          task (you need its ID). Use the list tasks endpoints in order to retrieve
+          their IDs. '
+        operate: item
+        authentication: true
+        response:
+          type: map
+          fields:
+            name:
+              type: string
+              length:
+                minimum: 2
+                maximum: 40
+            description:
+              type: string
+              length:
+                minimum: 0
+                maximum: 120
+              option: true
+            status:
+              type: enum
+              values:
+              - not-done
+              - in-progress
+              - done
+        errors:
+          invalid-task-id: {}
+      update:
+        name: Update the information of task.
+        description: ' It updates the name, description and status of a task. If you
+          don''t want to change a piece of information, use null. '
+        operate: item
+        authentication: true
+        request:
+          type: map
+          fields:
+            name:
+              type: string
+              length:
+                minimum: 2
+                maximum: 40
+              option: true
+            description:
+              type: string
+              length:
+                minimum: 0
+                maximum: 120
+              option: true
+            status:
+              type: enum
+              values:
+              - not-done
+              - in-progress
+              - done
+              option: true
+        errors:
+          invalid-task-id: {}
+      delete:
+        name: Delete a task.
+        description: ' It simply deletes a given task. '
+        operate: item
+        authentication: true
+        errors:
+          invalid-task-id: {}
+      list:
+        name: List all existing tasks.
+        description: ' It returns a list of IDs of all the tasks for the user. '
+        operate: collection
+        authentication: true
+        response:
           type: list
           value:
             type: string
-        shortcuts:
-          type: list
-          value:
-            type: string
-        settings:
-          type: list
-          value:
-            type: string
+      mark-all-as:
+        name: Change the status of all tasks.
+        description: ' It changes the status of all tasks for the user. '
+        operate: collection
+        authentication: true
+        request:
+          type: enum
+          values:
+          - not-done
+          - in-progress
+          - done
