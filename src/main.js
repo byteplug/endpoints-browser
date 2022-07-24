@@ -27,7 +27,8 @@ router.specs = specs
 app.use(router)
 
 app.use(Inkline, {
-    components
+    components,
+    colorMode: 'light'
 })
 app.use(VueHighlightJS)
 
