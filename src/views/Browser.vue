@@ -1,8 +1,8 @@
 <template>
   <i-container
     fluid
-    class="_height:30% _background:primary"
-    style="min-height: 250px;"
+    class="_background:primary"
+    style="height: 30%; min-height: 250px;"
   >
     <i-container class="_display:flex">
       <div class="_padding-top:1 _padding-x:1 ">
@@ -28,9 +28,11 @@
       </div>
     </i-container>
   </i-container>
-  <i-container>
+  <i-container
+    style="min-height: 70%;"
+  >
     <i-card style="transform: translateY(-50px);">
-      <div class="_display:flex _justify-content:space-between">
+      <div class="_display:flex _justify-content:space-between _margin-bottom:2">
         <div class="_display:flex _justify-content:space-between _align-items:start">
           <div>
             <span class="_font-size:lg _font-weight:bold _margin-right:1">My Company</span> 
@@ -77,9 +79,7 @@
           </div>
         </div>
       </div>
-      <div>
-        <router-view></router-view>
-      </div>
+      <router-view></router-view>
     </i-card>
   </i-container>
 </template>
