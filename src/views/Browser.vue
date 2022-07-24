@@ -11,7 +11,7 @@
       <div class="_flex-grow:1">
         <div class="_border-bottom _display:flex _justify-content:space-between _align-items:end">
           <div>
-            <h4>Byteplug Endpoint Browser</h4>
+            <h4>Endpoints Browser</h4>
           </div>
           <div class="_padding-bottom:1">
             <searchbar :fromFile="false"/>
