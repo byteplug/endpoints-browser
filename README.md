@@ -1,35 +1,14 @@
-# byteplug-endpoint-browser
+# Endpoints Browser
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a browser for HTTP APIs implementing the *Endpoints* standard developed
+by Byteplug. It's accessible at https://browser.byteplug.io/ and the source
+code is released under the MIT license.
 
-## Recommended IDE Setup
+Developed by Jonathan De Wachter (jonathan.dewachter@byteplug.io).
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin).
+## More infos
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+It's a web front-end that lets you enter the URL of a service (for instance,
+`api.my-company.com`) and gives a developer-friendly interface to understand
+how to interact with the its HTTP API (providing it's fully compliant with the
+standard).
